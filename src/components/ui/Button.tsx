@@ -1,14 +1,19 @@
+import type { LinkProps } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  variant?: 'primary' | 'secondary' | 'accent' | 'info';
+interface Props
+  extends
+    Omit<HTMLAttributes<HTMLAnchorElement>, 'slot' | 'children'>,
+    LinkProps {
+  variant?: 'primary' | 'secondary' | 'accent' | 'info' | 'link';
   size?: 'sm' | 'default' | 'lg';
-  type?: 'button' | 'submit' | 'reset' | 'link';
+  type?: 'button' | 'submit' | 'reset';
   text?: string;
-  icon?: React.ReactNode;
-  children?: React.ReactNode;
-  to?: string;
+  icon?: ReactNode;
+  target?: string;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -16,9 +21,10 @@ function Button({
   children,
   variant = 'primary',
   size = 'default',
-  type = 'button',
+  type,
   to,
   target,
+  onClick,
   className = '',
   ...props
 }: React.PropsWithChildren<Props>) {
@@ -27,6 +33,7 @@ function Button({
     secondary: 'bg-secondary hover:bg-secondary/90',
     accent: 'bg-accent hover:bg-accent/90',
     info: 'bg-info hover:bg-info/90',
+    link: 'bg-transparent hover:bg-transparent',
   };
 
   const sizes = {
@@ -40,20 +47,21 @@ function Button({
   ];
   if (type === 'submit' || type === 'reset' || type === 'button') {
     return (
-      <button type={type} className={classList.join(' ')}>
+      <button onClick={onClick} type={type} className={classList.join(' ')}>
         {props.text || children}
         {props.icon && <div className="block ml-2">{props.icon}</div>}
       </button>
     );
   }
   const anchorClassList = [
-    'btn cursor-pointer bg-transparent hover:bg-transparent text-link hover:text-link/80',
+    'btn cursor-pointer',
     twMerge(variants[variant] || '', sizes[size] || '', className),
   ];
   return (
     <Link
       className={anchorClassList.join(' ')}
       to={to}
+      activeProps={{ className: 'text-secondary dark:text-white' }}
       {...(target ? { target: target, rel: 'noopener noreferrer' } : {})}
       {...props}
     >

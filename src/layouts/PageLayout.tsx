@@ -7,8 +7,8 @@ interface Props {
 
 function PageLayout(props: React.PropsWithChildren<Props>) {
   return (
-    <main className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4 ">{props.title}</h1>
+    <main className="container mx-auto pt-8">
+      <title className="text-2xl font-bold mb-4 ">{props.title}</title>
       {props.children}
     </main>
   );

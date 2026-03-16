@@ -4,21 +4,30 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* color-scheme: light dark; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --hrv-color-text: #0f2d32;
   --hrv-color-primary: #262626;
   --hrv-color-primary-light: #4b5563;
   --hrv-color-secondary: #16a34a;
   --hrv-color-accent: #64748b;
   --hrv-color-info: #6b7280;
   --hrv-color-link: #f3f4f6;
+  --hrv-color-page: rgb(255 255 255);
+  --hrv-color-muted: rgb(16 16 16 / 66%);
+
+  background-color: var(--hrv-color-page);
+  color: var(--hrv-color-text);
+
+  ::selection {
+    background-color: var(--hrv-color-secondary);
+    color: var(--hrv-color-page);
+  }
 }
 
 @theme {
@@ -37,11 +46,13 @@
   --color-accent: var(--hrv-color-accent);
   --color-info: var(--hrv-color-info);
   --color-link: var(--hrv-color-link);
+  --color-page: var(--hrv-color-page);
+  --color-muted: var(--hrv-color-muted);
 }
 
 @layer components {
   .card {
-    background-color: var(--color-gray-700);
+    background-color: var(--color-gray-300);
     border-radius: var(--radius-lg);
     padding: --spacing(6);
     box-shadow: var(--shadow-xl);
@@ -79,3 +90,19 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Card background changes on dark mode */
+.dark {
+  --hrv-color-text: rgba(255, 255, 255, 0.87);
+  --hrv-color-page: rgb(3 6 32);
+  --hrv-color-muted: rgb(229 236 246 / 80%);
+
+  .card {
+    background-color: var(--color-gray-700);
+  }
+
+  ::selection {
+    background-color: var(--color-secondary);
+    color: var(--color-page);
+  }
+}

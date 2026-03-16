@@ -16,65 +16,69 @@ function DemoRoute() {
         <div className="flex flex-col flex-1 gap-4">
           <div className="flex items-center justify-start gap-4">
             <span className="mr-4 w-1/6">Primary</span>
-            <Button className="" size="sm">
+            <Button className="" type="button" size="sm">
               Small
             </Button>
             <Button
               className=""
+              type="button"
               variant="primary"
               icon={<HomeIcon className="w-4 h-4" />}
             >
               Default
             </Button>
-            <Button className="" size="lg">
+            <Button className="" type="button" size="lg">
               Large
             </Button>
           </div>
           <div className="flex items-center justify-start gap-4">
             <span className="mr-4 w-1/6">Secondary</span>
-            <Button className="" variant="secondary" size="sm">
+            <Button className="" type="button" variant="secondary" size="sm">
               Small
             </Button>
             <Button
               className=""
+              type="button"
               variant="secondary"
               icon={<HomeIcon className="w-4 h-4" />}
             >
               Default
             </Button>
-            <Button className="" variant="secondary" size="lg">
+            <Button className="" type="button" variant="secondary" size="lg">
               Large
             </Button>
           </div>
           <div className="flex items-center justify-start gap-4">
             <span className="mr-4 w-1/6">Accent</span>
-            <Button className="" variant="accent" size="sm">
+            <Button className="" type="button" variant="accent" size="sm">
               Small
             </Button>
             <Button
               className=""
+              type="button"
               variant="accent"
               icon={<HomeIcon className="w-4 h-4" />}
             >
               Default
             </Button>
-            <Button className="" variant="accent" size="lg">
+            <Button className="" type="button" variant="accent" size="lg">
               Large
             </Button>
           </div>
           <div className="flex items-center justify-start gap-4">
             <span className="mr-4 w-1/6">Info</span>
-            <Button className="" variant="info" size="sm">
+            <Button className="" type="button" variant="info" size="sm">
               Small
             </Button>
             <Button
               className=""
+              type="button"
               variant="info"
               icon={<HomeIcon className="w-4 h-4" />}
             >
               Default
             </Button>
-            <Button className="" variant="info" size="lg">
+            <Button className="" type="button" variant="info" size="lg">
               Large
             </Button>
           </div>
@@ -85,18 +89,28 @@ function DemoRoute() {
         <div className="flex flex-col flex-1 gap-4">
           <div className="flex items-center justify-start gap-4">
             <span className="mr-4 w-1/6">Link</span>
-            <Button className="" type="link" size="sm" to="/demo">
+            <Button
+              className="text-link hover:text-link/80"
+              variant="link"
+              size="sm"
+              to="/demo"
+            >
               Small
             </Button>
             <Button
-              className=""
-              type="link"
-              to="/demo"
+              className="text-link hover:text-link/80"
+              variant="link"
+              to="/"
               icon={<HomeIcon className="w-4 h-4" />}
             >
               Default
             </Button>
-            <Button className="" type="link" size="lg" to="/demo">
+            <Button
+              className="text-link hover:text-link/80"
+              variant="link"
+              size="lg"
+              to="/demo"
+            >
               Large
             </Button>
           </div>

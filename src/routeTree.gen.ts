@@ -14,8 +14,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VouchersLazyRouteImport = createFileRoute('/vouchers')()
 const EmployeesLazyRouteImport = createFileRoute('/employees')()
 
+const VouchersLazyRoute = VouchersLazyRouteImport.update({
+  id: '/vouchers',
+  path: '/vouchers',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/vouchers.lazy').then((d) => d.Route))
 const EmployeesLazyRoute = EmployeesLazyRouteImport.update({
   id: '/employees',
   path: '/employees',
@@ -36,34 +42,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo' | '/employees'
+  fullPaths: '/' | '/demo' | '/employees' | '/vouchers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo' | '/employees'
-  id: '__root__' | '/' | '/demo' | '/employees'
+  to: '/' | '/demo' | '/employees' | '/vouchers'
+  id: '__root__' | '/' | '/demo' | '/employees' | '/vouchers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
   EmployeesLazyRoute: typeof EmployeesLazyRoute
+  VouchersLazyRoute: typeof VouchersLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vouchers': {
+      id: '/vouchers'
+      path: '/vouchers'
+      fullPath: '/vouchers'
+      preLoaderRoute: typeof VouchersLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/employees': {
       id: '/employees'
       path: '/employees'
@@ -92,6 +109,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
   EmployeesLazyRoute: EmployeesLazyRoute,
+  VouchersLazyRoute: VouchersLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
