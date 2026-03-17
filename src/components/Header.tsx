@@ -28,6 +28,15 @@ function Header() {
               <li className="mr-3">
                 <Button
                   variant="link"
+                  to="/plans"
+                  className="text-muted inline-block py-2 px-4"
+                >
+                  Benefit plans
+                </Button>
+              </li>
+              <li className="mr-3">
+                <Button
+                  variant="link"
                   to="/vouchers"
                   className="text-muted inline-block py-2 px-4"
                 >

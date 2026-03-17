@@ -15,6 +15,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VouchersLazyRouteImport = createFileRoute('/vouchers')()
+const PlansLazyRouteImport = createFileRoute('/plans')()
 const EmployeesLazyRouteImport = createFileRoute('/employees')()
 
 const VouchersLazyRoute = VouchersLazyRouteImport.update({
@@ -22,6 +23,11 @@ const VouchersLazyRoute = VouchersLazyRouteImport.update({
   path: '/vouchers',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/vouchers.lazy').then((d) => d.Route))
+const PlansLazyRoute = PlansLazyRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/plans.lazy').then((d) => d.Route))
 const EmployeesLazyRoute = EmployeesLazyRouteImport.update({
   id: '/employees',
   path: '/employees',
@@ -42,12 +48,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/plans': typeof PlansLazyRoute
   '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/plans': typeof PlansLazyRoute
   '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRoutesById {
@@ -55,20 +63,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/employees': typeof EmployeesLazyRoute
+  '/plans': typeof PlansLazyRoute
   '/vouchers': typeof VouchersLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo' | '/employees' | '/vouchers'
+  fullPaths: '/' | '/demo' | '/employees' | '/plans' | '/vouchers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo' | '/employees' | '/vouchers'
-  id: '__root__' | '/' | '/demo' | '/employees' | '/vouchers'
+  to: '/' | '/demo' | '/employees' | '/plans' | '/vouchers'
+  id: '__root__' | '/' | '/demo' | '/employees' | '/plans' | '/vouchers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
   EmployeesLazyRoute: typeof EmployeesLazyRoute
+  PlansLazyRoute: typeof PlansLazyRoute
   VouchersLazyRoute: typeof VouchersLazyRoute
 }
 
@@ -79,6 +89,13 @@ declare module '@tanstack/react-router' {
       path: '/vouchers'
       fullPath: '/vouchers'
       preLoaderRoute: typeof VouchersLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/employees': {
@@ -109,6 +126,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
   EmployeesLazyRoute: EmployeesLazyRoute,
+  PlansLazyRoute: PlansLazyRoute,
   VouchersLazyRoute: VouchersLazyRoute,
 }
 export const routeTree = rootRouteImport

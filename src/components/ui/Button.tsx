@@ -26,6 +26,7 @@ function Button({
   target,
   onClick,
   className = '',
+  disabled = false,
   ...props
 }: React.PropsWithChildren<Props>) {
   const variants = {
@@ -42,12 +43,17 @@ function Button({
     lg: 'btn-lg',
   };
   const classList = [
-    'btn cursor-pointer relative',
+    'btn cursor-pointer relative disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none',
     twMerge(variants[variant] || '', sizes[size] || '', className),
   ];
   if (type === 'submit' || type === 'reset' || type === 'button') {
     return (
-      <button onClick={onClick} type={type} className={classList.join(' ')}>
+      <button
+        onClick={onClick}
+        type={type}
+        className={classList.join(' ')}
+        disabled={disabled}
+      >
         {props.text || children}
         {props.icon && <div className="block ml-2">{props.icon}</div>}
       </button>
